@@ -1,4 +1,4 @@
-package com.example.audiorecorder.ui.dashboard;
+package com.wingsmight.audiorecorder.ui.settings;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.audiorecorder.ui.home.HomeFragment"
+        android:name="com.wingsmight.audiorecorder.ui.main.HomeFragment"
         android:label="@string/title_main_tab"
         tools:layout="@layout/fragment_main" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.example.audiorecorder.ui.dashboard.DashboardFragment"
+        android:name="com.wingsmight.audiorecorder.ui.settings.DashboardFragment"
         android:label="@string/title_settings_tab"
         tools:layout="@layout/fragment_settings" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.audiorecorder.ui.notifications.NotificationsFragment"
+        android:name="com.wingsmight.audiorecorder.ui.records.NotificationsFragment"
         android:label="@string/title_records_tab"
         tools:layout="@layout/fragment_records" />
 </navigation>

@@ -1,4 +1,4 @@
-package com.example.audiorecorder.ui.home;
+package com.wingsmight.audiorecorder.ui.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,20 +12,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.audiorecorder.R;
-import com.example.audiorecorder.databinding.FragmentHomeBinding;
+import com.wingsmight.audiorecorder.databinding.FragmentMainBinding;
 
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
-    private FragmentHomeBinding binding;
+    private FragmentMainBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentMainBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
         final TextView textView = binding.textHome;

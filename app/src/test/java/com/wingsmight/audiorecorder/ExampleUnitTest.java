@@ -1,4 +1,4 @@
-package com.example.audiorecorder;
+package com.wingsmight.audiorecorder;
 
 import org.junit.Test;
 

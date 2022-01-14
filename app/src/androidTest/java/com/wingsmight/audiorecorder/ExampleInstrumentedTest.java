@@ -1,4 +1,4 @@
-package com.example.audiorecorder;
+package com.wingsmight.audiorecorder;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.example.audiorecorder", appContext.getPackageName());
+        assertEquals("com.wingsmight.audiorecorder", appContext.getPackageName());
     }
 }
