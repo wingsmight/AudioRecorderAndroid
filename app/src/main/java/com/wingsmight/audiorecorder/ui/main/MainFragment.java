@@ -1,5 +1,6 @@
-package com.wingsmight.audiorecorder.ui.records;
+package com.wingsmight.audiorecorder.ui.main;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,34 +13,38 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.wingsmight.audiorecorder.databinding.FragmentRecordsBinding;
+import com.wingsmight.audiorecorder.MainActivity;
+import com.wingsmight.audiorecorder.databinding.FragmentMainBinding;
 
-public class NotificationsFragment extends Fragment {
+public class MainFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
-    private FragmentRecordsBinding binding;
+    private MainViewModel mainViewModel;
+    private FragmentMainBinding binding;
 
+    @SuppressLint("RestrictedApi")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
+        mainViewModel =
+                new ViewModelProvider(this).get(MainViewModel.class);
 
-        binding = FragmentRecordsBinding.inflate(inflater, container, false);
+        binding = FragmentMainBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textNotifications;
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        final TextView textView = binding.textHome;
+        mainViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
             }
         });
+
         return root;
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+
         binding = null;
     }
 }

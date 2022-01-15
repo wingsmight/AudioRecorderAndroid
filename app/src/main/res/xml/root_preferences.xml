@@ -1,0 +1,135 @@
+<PreferenceScreen
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <PreferenceCategory app:title="Профиль">
+
+        <Preference
+            app:key="birthdate"
+            app:selectable="false"
+            app:title="Username Usersurname"
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="true"
+            />
+
+        <Preference
+            app:key="birthdate"
+            app:selectable="false"
+            app:title="Дата рождения"
+            app:summary="01.01.2001"
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="true"
+            />
+
+        <Preference
+            app:key="email"
+            app:selectable="false"
+            app:title="Почта"
+            app:summary="test@test.com"
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="true"
+            />
+
+        <Preference
+            app:key="logout"
+            app:selectable="false"
+            app:title="Выйти из аккаунта"
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="true"
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Опции">
+
+        <Preference
+            app:key="sync"
+            app:title="Не записывать"
+            app:selectable="false"
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="true"
+            />
+
+        <SwitchPreferenceCompat
+            app:dependency="sync"
+            app:key="attachment"
+            app:title="Включение записи по голосу"
+            app:iconSpaceReserved="false"
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Внешний вид">
+
+        <ListPreference
+            app:defaultValue="@string/pf_dark_auto"
+            app:dialogTitle="@string/pf_dark_dialog"
+            app:entries="@array/light_theme"
+            app:entryValues="@array/light_theme_value"
+            app:key="@string/pf_key_light"
+            app:summary="@string/pf_content_message"
+            app:title="@string/pf_light_title"
+            app:iconSpaceReserved="false"
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Облако">
+
+        <Preference
+            app:key="sync"
+            app:title="34 kB  /   2 GB"
+            app:selectable="false"
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="true"
+            />
+
+
+        <Preference
+            app:key="sync"
+            app:title="Размер облака"
+            app:selectable="false"
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="true"
+            />
+
+    </PreferenceCategory>
+
+
+    <PreferenceCategory app:title="Справка">
+
+        <Preference
+            app:key="sync"
+            app:title="О принципах работы приложения"
+            app:selectable="false"
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="true"
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Контакты">
+
+        <Preference
+            app:key="sync"
+            app:title="..."
+            app:selectable="false"
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="true"
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Другое">
+
+        <Preference
+            app:key="sync"
+            app:title="Поблагодарить разработчика"
+            app:selectable="false"
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="true"
+            />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

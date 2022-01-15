@@ -1,5 +1,6 @@
 package com.wingsmight.audiorecorder;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -27,11 +28,18 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
+                R.id.navigation_main, R.id.navigation_settings, R.id.navigation_records)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+        hideToolBar();
     }
 
+    @SuppressLint("RestrictedApi")
+    private void hideToolBar() {
+        getSupportActionBar().setShowHideAnimationEnabled(false);
+        getSupportActionBar().hide();
+    }
 }

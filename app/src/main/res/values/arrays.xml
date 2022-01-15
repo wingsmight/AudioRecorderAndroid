@@ -1,0 +1,23 @@
+<resources>
+    <!-- Reply Preference -->
+    <string-array name="reply_entries">
+        <item>Reply</item>
+        <item>Reply to all</item>
+    </string-array>
+
+    <string-array name="reply_values">
+        <item>reply</item>
+        <item>reply_all</item>
+    </string-array>
+
+    <string-array name="light_theme">
+        <item>@string/light_mode_auto</item>
+        <item>@string/light_mode_on</item>
+        <item>@string/light_mode_off</item>
+    </string-array>
+    <string-array name="light_theme_value">
+        <item>@string/pf_dark_auto</item>
+        <item>@string/pf_light_on</item>
+        <item>@string/pf_light_off</item>
+    </string-array>
+</resources>

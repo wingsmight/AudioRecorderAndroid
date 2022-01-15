@@ -1,4 +1,4 @@
-package com.wingsmight.audiorecorder.ui.main;
+package com.wingsmight.audiorecorder.ui.records;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,23 +12,23 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.wingsmight.audiorecorder.databinding.FragmentMainBinding;
+import com.wingsmight.audiorecorder.databinding.FragmentRecordsBinding;
 
-public class HomeFragment extends Fragment {
+public class RecordsFragment extends Fragment {
 
-    private HomeViewModel homeViewModel;
-    private FragmentMainBinding binding;
+    private RecordsViewModel recordsViewModel;
+    private FragmentRecordsBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        recordsViewModel =
+                new ViewModelProvider(this).get(RecordsViewModel.class);
 
-        binding = FragmentMainBinding.inflate(inflater, container, false);
+        binding = FragmentRecordsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        final TextView textView = binding.textNotifications;
+        recordsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
