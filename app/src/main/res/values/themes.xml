@@ -11,6 +11,10 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Preference -->
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.v14.Material</item>
+
         <!-- Customize your theme here. -->
+
     </style>
 </resources>

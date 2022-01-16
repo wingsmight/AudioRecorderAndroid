@@ -132,4 +132,17 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="">
+
+        <Preference
+            app:key="sync"
+            app:title=" "
+            app:selectable="false"
+            app:iconSpaceReserved="false"
+            app:singleLineTitle="true"
+            />
+
+    </PreferenceCategory>
+
+
 </PreferenceScreen>
