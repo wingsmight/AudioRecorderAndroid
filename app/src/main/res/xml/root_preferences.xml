@@ -51,8 +51,7 @@
             />
 
         <SwitchPreferenceCompat
-            app:dependency="recordByVoice"
-            app:key="attachment"
+            app:key="recordByVoice"
             app:title="Включение записи по голосу"
             app:iconSpaceReserved="false"
             />
@@ -66,7 +65,7 @@
             app:dialogTitle="@string/pf_dark_dialog"
             app:entries="@array/light_theme"
             app:entryValues="@array/light_theme_value"
-            app:key="themeMode"
+            app:key="@string/themeModeListKey"
             app:summary="@string/pf_content_message"
             app:title="@string/pf_light_title"
             app:iconSpaceReserved="false"

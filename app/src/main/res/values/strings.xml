@@ -18,17 +18,18 @@
     </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
 
-    <string name="light_mode_auto">0</string>
-    <string name="light_mode_on">1</string>
-    <string name="light_mode_off">2</string>
+    <string name="light_mode_auto">Системная</string>
+    <string name="light_mode_on">Светлая тема</string>
+    <string name="light_mode_off">Темная тема</string>
 
-    <string name="pf_dark_auto">00</string>
-    <string name="pf_light_on">01</string>
-    <string name="pf_light_off">02</string>
+    <string name="pf_dark_auto">Системная</string>
+    <string name="pf_light_on">Светлая тема</string>
+    <string name="pf_light_off">Темная тема</string>
 
-    <string name="pf_dark_dialog">001</string>
-    <string name="pf_key_light">002</string>
+    <string name="pf_dark_dialog">Главная тема</string>
 
     <string name="pf_light_title">Главная тема</string>
     <string name="pf_content_message">Системная</string>
+
+    <string name="themeModeListKey">themeMode</string>
 </resources>
