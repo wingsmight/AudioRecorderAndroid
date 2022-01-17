@@ -5,7 +5,7 @@
     <PreferenceCategory app:title="Профиль">
 
         <Preference
-            app:key="birthdate"
+            app:key="userFullName"
             app:selectable="false"
             app:title="Username Usersurname"
             app:iconSpaceReserved="false"
@@ -13,7 +13,7 @@
             />
 
         <Preference
-            app:key="birthdate"
+            app:key="birthDate"
             app:selectable="false"
             app:title="Дата рождения"
             app:summary="01.01.2001"
@@ -43,7 +43,7 @@
     <PreferenceCategory app:title="Опции">
 
         <Preference
-            app:key="sync"
+            app:key="doNotDisturbInterval"
             app:title="Не записывать"
             app:selectable="false"
             app:iconSpaceReserved="false"
@@ -51,7 +51,7 @@
             />
 
         <SwitchPreferenceCompat
-            app:dependency="sync"
+            app:dependency="recordByVoice"
             app:key="attachment"
             app:title="Включение записи по голосу"
             app:iconSpaceReserved="false"
@@ -66,7 +66,7 @@
             app:dialogTitle="@string/pf_dark_dialog"
             app:entries="@array/light_theme"
             app:entryValues="@array/light_theme_value"
-            app:key="@string/pf_key_light"
+            app:key="themeMode"
             app:summary="@string/pf_content_message"
             app:title="@string/pf_light_title"
             app:iconSpaceReserved="false"
@@ -77,7 +77,7 @@
     <PreferenceCategory app:title="Облако">
 
         <Preference
-            app:key="sync"
+            app:key="cloudSize"
             app:title="34 kB  /   2 GB"
             app:selectable="false"
             app:iconSpaceReserved="false"
@@ -86,7 +86,7 @@
 
 
         <Preference
-            app:key="sync"
+            app:key="cloudType"
             app:title="Размер облака"
             app:selectable="false"
             app:iconSpaceReserved="false"
@@ -99,7 +99,7 @@
     <PreferenceCategory app:title="Справка">
 
         <Preference
-            app:key="sync"
+            app:key="info"
             app:title="О принципах работы приложения"
             app:selectable="false"
             app:iconSpaceReserved="false"
@@ -111,7 +111,7 @@
     <PreferenceCategory app:title="Контакты">
 
         <Preference
-            app:key="sync"
+            app:key="contacts"
             app:title="..."
             app:selectable="false"
             app:iconSpaceReserved="false"
@@ -123,7 +123,7 @@
     <PreferenceCategory app:title="Другое">
 
         <Preference
-            app:key="sync"
+            app:key="donat"
             app:title="Поблагодарить разработчика"
             app:selectable="false"
             app:iconSpaceReserved="false"
@@ -135,7 +135,7 @@
     <PreferenceCategory app:title="">
 
         <Preference
-            app:key="sync"
+            app:key="blank"
             app:title=" "
             app:selectable="false"
             app:iconSpaceReserved="false"
