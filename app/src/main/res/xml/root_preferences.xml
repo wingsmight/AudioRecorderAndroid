@@ -32,10 +32,9 @@
 
         <Preference
             app:key="logout"
+            app:layout="@layout/logout_button"
             app:selectable="false"
-            app:title="Выйти из аккаунта"
             app:iconSpaceReserved="false"
-            app:singleLineTitle="true"
             />
 
     </PreferenceCategory>
@@ -119,7 +118,8 @@
 
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="Другое">
+    <PreferenceCategory app:title="Другое"
+        >
 
         <Preference
             app:key="donat"

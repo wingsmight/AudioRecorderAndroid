@@ -2,6 +2,8 @@ package com.wingsmight.audiorecorder;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -41,5 +43,9 @@ public class MainActivity extends AppCompatActivity {
     private void hideToolBar() {
         getSupportActionBar().setShowHideAnimationEnabled(false);
         getSupportActionBar().hide();
+    }
+
+    public void logOut(View view) {
+
     }
 }

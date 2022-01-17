@@ -8,15 +8,22 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.os.BuildCompat;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
 import com.wingsmight.audiorecorder.MainActivity;
 import com.wingsmight.audiorecorder.R;
+
+import org.jetbrains.annotations.NotNull;
 
 public class SettingsPreferencesFragment extends PreferenceFragmentCompat {
 
