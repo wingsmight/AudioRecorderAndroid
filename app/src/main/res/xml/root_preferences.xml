@@ -96,11 +96,9 @@
     <PreferenceCategory app:title="Справка">
 
         <Preference
-            app:key="info"
+            app:key="appInfo"
             app:title="О принципах работы приложения"
-            app:selectable="false"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="true"
+            app:layout="@layout/app_info_button"
             />
 
     </PreferenceCategory>

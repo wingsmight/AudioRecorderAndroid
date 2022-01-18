@@ -14,6 +14,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.wingsmight.audiorecorder.databinding.ActivityMainBinding;
+import com.wingsmight.audiorecorder.ui.settings.AppInfoActivity;
 import com.wingsmight.audiorecorder.ui.settings.DoNotDisturbIntervalActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -51,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public void setDoNotDisturbInterval(View view) {
         Intent myIntent = new Intent(MainActivity.this, DoNotDisturbIntervalActivity.class);
+        MainActivity.this.startActivity(myIntent);
+    }
+    public void showAppInfoPanel(View view) {
+        Intent myIntent = new Intent(MainActivity.this, AppInfoActivity.class);
         MainActivity.this.startActivity(myIntent);
     }
 }

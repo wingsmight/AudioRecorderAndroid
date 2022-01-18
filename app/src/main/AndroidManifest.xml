@@ -14,6 +14,10 @@
             android:label="@string/title_activity_do_not_disturb_interval"
             android:theme="@style/Theme.AudioRecorder.NoActionBar"></activity>
         <activity
+            android:name=".ui.settings.AppInfoActivity"
+            android:label="@string/title_activity_app_info"
+            android:theme="@style/Theme.AudioRecorder"></activity>
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name">
