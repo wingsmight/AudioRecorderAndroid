@@ -35,10 +35,7 @@ public class MainActivity extends AppCompatActivity {
                 R.id.navigation_main, R.id.navigation_settings, R.id.navigation_records)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
-
-        hideToolBar();
     }
 
     @SuppressLint("RestrictedApi")
