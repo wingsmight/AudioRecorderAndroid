@@ -42,11 +42,10 @@
     <PreferenceCategory app:title="Опции">
 
         <Preference
+            app:title="Не записывать в"
+            app:summary="22:00 - 8:00"
             app:key="doNotDisturbInterval"
-            app:title="Не записывать"
-            app:selectable="false"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="true"
+            app:layout="@layout/do_not_disturb_button"
             />
 
         <SwitchPreferenceCompat

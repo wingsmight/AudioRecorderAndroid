@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AudioRecorder">
         <activity
+            android:name=".ui.settings.DoNotDisturbIntervalActivity"
+            android:label="@string/title_activity_do_not_disturb_interval"
+            android:theme="@style/Theme.AudioRecorder.NoActionBar"></activity>
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name">

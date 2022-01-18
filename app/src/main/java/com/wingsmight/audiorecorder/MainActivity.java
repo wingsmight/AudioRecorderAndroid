@@ -1,8 +1,8 @@
 package com.wingsmight.audiorecorder;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -14,6 +14,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.wingsmight.audiorecorder.databinding.ActivityMainBinding;
+import com.wingsmight.audiorecorder.ui.settings.DoNotDisturbIntervalActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -47,5 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void logOut(View view) {
 
+    }
+    public void setDoNotDisturbInterval(View view) {
+        Intent myIntent = new Intent(MainActivity.this, DoNotDisturbIntervalActivity.class);
+        MainActivity.this.startActivity(myIntent);
     }
 }

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -64,7 +65,17 @@ public class SettingsPreferencesFragment extends PreferenceFragmentCompat {
     public void onResume() {
         super.onResume();
 
-        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(preferenceChangeListener);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        sharedPreferences.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
+
+        Preference preference = findPreference("doNotDisturbInterval");
+
+        int fromHour = sharedPreferences.getInt(getString(R.string.preference_do_not_disturb_from_hour), 22);
+        int fromMinute = sharedPreferences.getInt(getString(R.string.preference_do_not_disturb_from_minute), 0);
+        int toHour = sharedPreferences.getInt(getString(R.string.preference_do_not_disturb_to_hour), 8);
+        int toMinute = sharedPreferences.getInt(getString(R.string.preference_do_not_disturb_to_minute), 0);
+
+        preference.setSummary(fromHour + ":" + String.format("%02d", fromMinute) + " - " + toHour + ":" + String.format("%02d", toMinute));
     }
 
     @Override

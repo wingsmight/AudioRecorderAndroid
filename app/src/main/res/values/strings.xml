@@ -32,4 +32,23 @@
     <string name="pf_content_message">Системная</string>
 
     <string name="themeModeListKey">themeMode</string>
+    <string name="title_activity_do_not_disturb_interval">DoNotDisturbIntervalActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <!-- Preferences -->
+    <string name="preference_file_key">com.wingsmight.AudioRecorder.PREFERENCE_FILE_KEY</string>
+
+    <!-- Do not disturb -->
+    <string name="preference_do_not_disturb_from_hour">preference_do_not_disturb_from_hour</string>
+    <string name="preference_do_not_disturb_from_minute">preference_do_not_disturb_from_minute</string>
+    <string name="preference_do_not_disturb_to_hour">preference_do_not_disturb_to_hour</string>
+    <string name="preference_do_not_disturb_to_minute">preference_do_not_disturb_to_minute</string>
+
 </resources>
