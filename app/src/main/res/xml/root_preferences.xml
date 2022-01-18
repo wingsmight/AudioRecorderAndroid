@@ -106,11 +106,10 @@
     <PreferenceCategory app:title="Контакты">
 
         <Preference
-            app:key="contacts"
-            app:title="..."
-            app:selectable="false"
+            app:key="contactEmal"
+            app:title="Почта"
+            app:summary="azzifastgames@gmail.com"
             app:iconSpaceReserved="false"
-            app:singleLineTitle="true"
             />
 
     </PreferenceCategory>
