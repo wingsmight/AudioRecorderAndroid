@@ -59,21 +59,6 @@ public class SettingsPreferencesFragment extends PreferenceFragmentCompat {
                     }
 
                     restartApp();
-                } else if (newValue.equals("userFullName")) {
-                    SharedPreferences prefs = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-
-                    Preference preference = findPreference(newValue);
-                    preference.setSummary("prefs.getString(newValue, \"\")");
-                } else if (newValue.equals("birthDate")) {
-                    SharedPreferences prefs = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-
-                    Preference preference = findPreference(newValue);
-                    preference.setSummary("prefs.getString(newValue, \"\")");
-                } else if (newValue.equals("email")) {
-                    SharedPreferences prefs = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-
-                    Preference preference = findPreference(newValue);
-                    preference.setSummary("prefs.getString(newValue, \"\")");
                 }
             }
         };
@@ -94,6 +79,15 @@ public class SettingsPreferencesFragment extends PreferenceFragmentCompat {
         int toMinute = sharedPreferences.getInt(getString(R.string.preference_do_not_disturb_to_minute), 0);
 
         preference.setSummary(fromHour + ":" + String.format("%02d", fromMinute) + " - " + toHour + ":" + String.format("%02d", toMinute));
+
+        Preference fullNamePref = findPreference("userFullName");
+        fullNamePref.setTitle(sharedPreferences.getString("userFullName", ""));
+
+        Preference birthDatePref = findPreference("birthDate");
+        birthDatePref.setSummary(sharedPreferences.getString("birthDate", "01.01.2001"));
+
+        Preference emailPref = findPreference("email");
+        emailPref.setSummary(sharedPreferences.getString("email", "01.01.2001"));
     }
 
     @Override
