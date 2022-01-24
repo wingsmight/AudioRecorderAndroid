@@ -13,7 +13,10 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.wingsmight.audiorecorder.databinding.ActivityMainBinding;
+import com.wingsmight.audiorecorder.ui.login.LogInActivity;
+import com.wingsmight.audiorecorder.ui.login.SignUpActivity;
 import com.wingsmight.audiorecorder.ui.settings.AppInfoActivity;
 import com.wingsmight.audiorecorder.ui.settings.DoNotDisturbIntervalActivity;
 
@@ -45,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void logOut(View view) {
-
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(MainActivity.this, SignUpActivity.class));
     }
     public void setDoNotDisturbInterval(View view) {
         Intent myIntent = new Intent(MainActivity.this, DoNotDisturbIntervalActivity.class);

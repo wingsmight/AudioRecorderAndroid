@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,8 @@ import com.wingsmight.audiorecorder.MainActivity;
 import com.wingsmight.audiorecorder.R;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.text.DateFormat;
 
 public class SettingsPreferencesFragment extends PreferenceFragmentCompat {
 
@@ -56,6 +59,21 @@ public class SettingsPreferencesFragment extends PreferenceFragmentCompat {
                     }
 
                     restartApp();
+                } else if (newValue.equals("userFullName")) {
+                    SharedPreferences prefs = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+                    Preference preference = findPreference(newValue);
+                    preference.setSummary("prefs.getString(newValue, \"\")");
+                } else if (newValue.equals("birthDate")) {
+                    SharedPreferences prefs = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+                    Preference preference = findPreference(newValue);
+                    preference.setSummary("prefs.getString(newValue, \"\")");
+                } else if (newValue.equals("email")) {
+                    SharedPreferences prefs = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+
+                    Preference preference = findPreference(newValue);
+                    preference.setSummary("prefs.getString(newValue, \"\")");
                 }
             }
         };
