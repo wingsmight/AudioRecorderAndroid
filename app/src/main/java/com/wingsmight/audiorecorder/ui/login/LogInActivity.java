@@ -1,7 +1,9 @@
 package com.wingsmight.audiorecorder.ui.login;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,14 +15,23 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Consumer;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.wingsmight.audiorecorder.CloudDatabase;
+import com.wingsmight.audiorecorder.CloudStoragePlan;
 import com.wingsmight.audiorecorder.MainActivity;
 import com.wingsmight.audiorecorder.R;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.Map;
 
 
 public class LogInActivity extends AppCompatActivity {
@@ -138,26 +149,37 @@ public class LogInActivity extends AppCompatActivity {
                 } else {
                     dialog.dismiss();
 
-                    checkIfEmailVerified();
+                    CloudDatabase.loadUser(email, new Consumer<Map<String, Object>>() {
+                        @Override
+                        public void accept(Map<String, Object> userData) {
+                            User user = new User(
+                                    (String)userData.get("name"),
+                                    (String)userData.get("surname"),
+                                    (String)userData.get("email"),
+                                    (Date)userData.get("birthDate"),
+                                    new Date().getTime(),
+                                    (int)userData.get("storageSize")
+                            );
+                            saveUserToPreferences(user);
 
+                            Intent intent = new Intent(LogInActivity.this, MainActivity.class);
+                            intent.putExtra(userEmail,email);
+                            startActivity(intent);
+                        }
+                    });
                 }
             }
         });
-
     }
-    //This function helps in verifying whether the email is verified or not.
-    private void checkIfEmailVerified(){
-            Email.getText().clear();
+    private void saveUserToPreferences(User user) {
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
 
-            Password.getText().clear();
-            Intent intent = new Intent(LogInActivity.this, MainActivity.class);
+        editor.putString("userFullName", user.Surname + " " + user.Name);
+        editor.putString("birthDate", DateFormat.getDateInstance(DateFormat.SHORT).format(user.getBirthDate()));
+        editor.putString("email", user.getEmail());
 
-            // Sending Email to Dashboard Activity using intent.
-            intent.putExtra(userEmail,email);
-
-            startActivity(intent);
+        editor.commit();
     }
-
-    //private void loadData
 }
 
