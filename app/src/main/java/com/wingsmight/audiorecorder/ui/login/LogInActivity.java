@@ -156,9 +156,9 @@ public class LogInActivity extends AppCompatActivity {
                                     (String)userData.get("name"),
                                     (String)userData.get("surname"),
                                     (String)userData.get("email"),
-                                    (Date)userData.get("birthDate"),
+                                    new Date(),
                                     new Date().getTime(),
-                                    (int)userData.get("storageSize")
+                                    ((Long)userData.get("storageSize")).intValue()
                             );
                             saveUserToPreferences(user);
 
