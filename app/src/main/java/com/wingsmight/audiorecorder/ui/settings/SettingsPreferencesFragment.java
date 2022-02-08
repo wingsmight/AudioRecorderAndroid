@@ -83,9 +83,6 @@ public class SettingsPreferencesFragment extends PreferenceFragmentCompat {
         Preference fullNamePref = findPreference("userFullName");
         fullNamePref.setTitle(sharedPreferences.getString("userFullName", ""));
 
-        Preference birthDatePref = findPreference("birthDate");
-        birthDatePref.setSummary(sharedPreferences.getString("birthDate", "01.01.2001"));
-
         Preference emailPref = findPreference("email");
         emailPref.setSummary(sharedPreferences.getString("email", "01.01.2001"));
     }

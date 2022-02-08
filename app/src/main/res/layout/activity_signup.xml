@@ -59,46 +59,6 @@
         android:textAlignment="textStart"
         />
 
-    <LinearLayout
-        android:id="@+id/birthdate"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textEmailAddress"
-        android:hint="Дата рождения:"
-        android:ems="10"
-        android:layout_below="@+id/editSurname"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:textAlignment="textStart"
-        android:orientation="horizontal"
-        android:padding="5dp"
-        >
-        <TextView
-            android:id="@+id/labelBirthdate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="Дата рождения:"
-            android:textSize="18dp"
-            android:textColor="@color/gray"
-            android:ems="10"
-            android:textAlignment="textStart"
-            />
-
-        <TextView
-            android:id="@+id/valueBirthdate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="01.01.2001"
-            android:textSize="18dp"
-            android:ems="10"
-            android:textAlignment="textEnd"
-            android:clickable="true"
-            />
-
-    </LinearLayout>
-
     <EditText
         android:id="@+id/editPassword"
         android:layout_width="fill_parent"
@@ -107,7 +67,7 @@
         android:hint="Пароль"
         android:textColor="#000"
         android:ems="10"
-        android:layout_below="@+id/birthdate"
+        android:layout_below="@+id/editSurname"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:textAlignment="textStart"

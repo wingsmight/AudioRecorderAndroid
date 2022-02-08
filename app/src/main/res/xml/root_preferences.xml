@@ -13,15 +13,6 @@
             />
 
         <Preference
-            app:key="birthDate"
-            app:selectable="false"
-            app:title="Дата рождения"
-            app:summary="01.01.2001"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="true"
-            />
-
-        <Preference
             app:key="email"
             app:selectable="false"
             app:title="Почта"

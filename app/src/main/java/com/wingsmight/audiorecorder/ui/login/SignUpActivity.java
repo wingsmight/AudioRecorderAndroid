@@ -42,7 +42,6 @@ import java.util.Date;
 
 public class SignUpActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener{
     EditText name,surname,email,password,confirmedPassword;
-    TextView birthdate;
     Button mRegisterbtn;
     TextView mLoginPageBack;
     FirebaseAuth mAuth;
@@ -61,7 +60,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         email = (EditText)findViewById(R.id.editEmail);
         name = (EditText)findViewById(R.id.editName);
         surname = (EditText)findViewById(R.id.editSurname);
-        birthdate = (TextView) findViewById(R.id.valueBirthdate);
         password = (EditText)findViewById(R.id.editPassword);
         confirmedPassword = (EditText)findViewById(R.id.editConfirmPassword);
         mRegisterbtn = (Button)findViewById(R.id.buttonRegister);
@@ -73,14 +71,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         mLoginPageBack.setOnClickListener(this);
         mDialog = new ProgressDialog(this);
         mdatabase = FirebaseDatabase.getInstance().getReference().child("Users");
-
-        birthdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                com.wingsmight.audiorecorder.ui.login.DatePicker mDatePickerDialogFragment = new com.wingsmight.audiorecorder.ui.login.DatePicker();
-                mDatePickerDialogFragment.show(getSupportFragmentManager(), "DATE PICK");
-            }
-        });
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
@@ -99,7 +89,6 @@ public class SignUpActivity extends AppCompatActivity implements View.OnClickLis
         mCalendar.set(Calendar.MONTH, month);
         mCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
         String selectedDate = DateFormat.getDateInstance(DateFormat.SHORT).format(mCalendar.getTime());
-        birthdate.setText(selectedDate);
         Birthdate = new Date(year, month, dayOfMonth);
     }
 
