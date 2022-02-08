@@ -27,4 +27,15 @@
     <style name="Theme.AudioRecorder.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.AudioRecorder.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="Widget.App.Slider" parent="Widget.MaterialComponents.Slider">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Slider</item>
+    </style>
+
+    <style name="ThemeOverlay.App.Slider" parent="">
+        <item name="colorPrimary">@color/darkGray</item>
+        <item name="colorOnPrimary">@color/gray</item>
+        <item name="colorOnSurface">@color/darkGray</item>
+    </style>
+
 </resources>

@@ -11,29 +11,33 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.wingsmight.audiorecorder.databinding.FragmentRecordsBinding;
 
-public class RecordsFragment extends Fragment {
+import java.util.Date;
 
-    private RecordsViewModel recordsViewModel;
+public class RecordsFragment extends Fragment {
     private FragmentRecordsBinding binding;
+    private RecyclerView recyclerView;
+
+    private Record[] testRecords = {
+            new Record(new Date(102)),
+            new Record(new Date(10400505))
+    };
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        recordsViewModel =
-                new ViewModelProvider(this).get(RecordsViewModel.class);
 
         binding = FragmentRecordsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textNotifications;
-        recordsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
+        recyclerView = binding.recordsList;
+        recyclerView.setAdapter(new RecordsAdapter(getContext(), testRecords, recyclerView));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         return root;
     }
 

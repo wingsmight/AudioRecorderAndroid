@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/record_background"
+    android:stateListAnimator="@animator/record_selection"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp">
+
+        <ImageView
+            android:id="@+id/clockImage"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:padding="7dp"
+            android:src="@drawable/ic_time_24"
+            app:tint="@color/softBlue"
+            />
+
+        <TextView
+            android:id="@+id/recordTimeText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/clockImage"
+            android:gravity="center"
+            android:text="1:00"
+            />
+
+        <TextView
+            android:id="@+id/recordDateText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/calendarImage"
+            android:gravity="center"
+            android:text="14.01.2022"
+            />
+
+        <ImageView
+            android:id="@+id/calendarImage"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:padding="7dp"
+            android:src="@drawable/ic_calendar_24"
+            app:tint="@color/softRed"
+            />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/recordDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        >
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/playerTimeSlider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:valueFrom="0.0"
+            android:valueTo="100.0"
+            android:value="50.0"
+            style="@style/Widget.App.Slider"
+            app:thumbColor="@color/darkDarkGray"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:text="00:00"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="00:04"
+                />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            >
+
+            <ImageButton
+                android:id="@+id/backward10Button"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_toLeftOf="@+id/playRecordButton"
+                android:src="@mipmap/ic_backward_10_foreground"
+                app:tint="@color/darkGray"
+                android:backgroundTint="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:padding="1dp"
+                />
+
+            <ImageButton
+                android:id="@+id/playRecordButton"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/ic_play_arrow_24"
+                app:tint="@color/darkGray"
+                android:backgroundTint="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:padding="2dp"
+                />
+
+            <ImageButton
+                android:id="@+id/forward10Button"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_toRightOf="@+id/playRecordButton"
+                android:src="@mipmap/ic_forward_10_foreground"
+                app:tint="@color/darkGray"
+                android:backgroundTint="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:padding="1dp"
+                />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"
+            android:alpha="0.5"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="9dp"
+            >
+
+            <TextView
+                android:id="@+id/recordSizeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:text="Размер:"
+                android:textSize="17dp"
+                android:textColor="@color/darkGray"
+                android:padding="5dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/recordSizeLabel"
+                android:text="31 KB"
+                android:textSize="17dp"
+                android:padding="5dp"
+                />
+
+            <ImageButton
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_share_24"
+                app:tint="@color/softBlue"
+                android:backgroundTint="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:padding="1dp"
+                android:layout_marginRight="@dimen/activity_vertical_margin"
+                />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"
+            android:alpha="0.5"
+            android:padding="@dimen/activity_vertical_margin"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="9dp"
+            >
+
+            <TextView
+                android:id="@+id/recordLocationLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:text="Геопозиция:"
+                android:textSize="17dp"
+                android:textColor="@color/darkGray"
+                android:padding="5dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="не определено"
+                android:textSize="17dp"
+                android:textAlignment="textEnd"
+                android:padding="5dp"
+                android:layout_marginRight="@dimen/activity_vertical_margin"
+                />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"
+            android:alpha="0.5"
+            android:layout_marginTop="5dp"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>
