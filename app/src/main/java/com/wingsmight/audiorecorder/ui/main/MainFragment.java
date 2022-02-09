@@ -20,15 +20,18 @@ import androidx.fragment.app.Fragment;
 import com.wingsmight.audiorecorder.R;
 import com.wingsmight.audiorecorder.audioHandlers.SpeechRecognitionListener;
 import com.wingsmight.audiorecorder.audioHandlers.SpeechRecognize;
+import com.wingsmight.audiorecorder.audioHandlers.VoiceRecorder;
 import com.wingsmight.audiorecorder.databinding.FragmentMainBinding;
 
 import org.vosk.LibVosk;
 import org.vosk.LogLevel;
+import org.vosk.android.SpeechService;
 
 public class MainFragment extends Fragment {
     private FragmentMainBinding binding;
     private SpeechRecognize speechRecognize;
-    private SpeechRecognitionListener speechListener = new SpeechRecognitionListener();
+    private SpeechRecognitionListener speechListener;
+    private VoiceRecorder voiceRecorder;
 
     private ImageButton switchRecordButton;
     private View[] volumeRounds = new View[2];
@@ -67,6 +70,9 @@ public class MainFragment extends Fragment {
         modelLoadingBar = binding.modelLoadingBar;
         modelLoadingBar.show();
 
+        voiceRecorder = new VoiceRecorder(getContext());
+        speechListener = new SpeechRecognitionListener(voiceRecorder);
+
         return root;
     }
 
@@ -97,6 +103,7 @@ public class MainFragment extends Fragment {
         setVolumeRoundsVisibility(View.INVISIBLE);
 
         speechRecognize.stop();
+        voiceRecorder.stop();
     }
     private void setVolumeRoundsVisibility(int visibility) {
         for (View volumeRound : volumeRounds) {

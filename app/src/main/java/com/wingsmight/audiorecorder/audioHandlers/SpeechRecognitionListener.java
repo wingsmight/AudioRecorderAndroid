@@ -16,33 +16,59 @@ package com.wingsmight.audiorecorder.audioHandlers;
 
 import android.util.Log;
 
+import com.wingsmight.audiorecorder.extensions.StringExt;
+
 import org.vosk.android.RecognitionListener;
 
 
 public class SpeechRecognitionListener implements
         RecognitionListener {
+    private VoiceRecorder voiceRecorder;
+
+
+    public SpeechRecognitionListener(VoiceRecorder voiceRecorder) {
+        this.voiceRecorder = voiceRecorder;
+    }
+
+
     @Override
     public void onResult(String hypothesis) {
-        Log.i("SpeechRecognition", "Result: " + hypothesis);
+        handleResult(removeTextTag(hypothesis));
     }
-
     @Override
     public void onFinalResult(String hypothesis) {
-        Log.i("SpeechRecognition", "Final result: " + hypothesis);
+        handleResult(removeTextTag(hypothesis));
     }
-
     @Override
     public void onPartialResult(String hypothesis) {
-        Log.i("SpeechRecognition", "Speech: " + hypothesis);
+        handleResult(removePartialTag(hypothesis));
     }
-
     @Override
     public void onError(Exception e) {
         Log.e("SpeechRecognition", e.getMessage());
     }
-
     @Override
     public void onTimeout() {
         Log.e("SpeechRecognition", "Timeout!");
+    }
+
+
+    private void handleResult(String result) {
+        if (!result.isEmpty()) {
+            Log.i("SpeechRecognition", "Speech: " + result);
+
+
+            if (!voiceRecorder.isRecording()) {
+                voiceRecorder.start();
+            } else {
+                voiceRecorder.resetAutoStop();
+            }
+        }
+    }
+    private String removePartialTag(String rawResult) {
+        return StringExt.slice(rawResult, "\"partial\" : \"", "\"\n}");
+    }
+    private String removeTextTag(String rawResult) {
+        return StringExt.slice(rawResult, "text\" : \"", "\"\n}");
     }
 }

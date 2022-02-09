@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         mainFragment = (MainFragment)childFragmentManager.getFragments().get(0);
 
         // vosk-api
-        LibVosk.setLogLevel(LogLevel.INFO);
+        LibVosk.setLogLevel(LogLevel.DEBUG);
 
         // Check if user has given permission to record audio, init the model after permission is granted
         int permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO);

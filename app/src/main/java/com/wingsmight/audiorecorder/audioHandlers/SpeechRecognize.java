@@ -51,16 +51,6 @@ public class SpeechRecognize {
 
 
     public SpeechRecognize(Context context, Runnable onReady) {
-        try {
-            AssetManager assetManager = context.getAssets();
-
-            String[] list = assetManager.list("model-small-ru-0.22");
-
-            InputStream inputStream = assetManager.open("model-small-ru-0.22");
-        } catch (IOException e) {
-            Log.e("SpeechRecognize", e.getMessage());
-        }
-
         StorageService.unpack(context, "model-small-ru-0.22", "model",
                 (model) -> {
                     this.model = model;
