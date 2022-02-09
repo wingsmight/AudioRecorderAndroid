@@ -56,6 +56,14 @@
             android:padding="10dp"
             />
 
+        <androidx.core.widget.ContentLoadingProgressBar
+            android:id="@+id/modelLoadingBar"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            style="?android:attr/progressBarStyleLarge"
+            android:visibility="visible"
+            />
+
     </FrameLayout>
 
     <LinearLayout
