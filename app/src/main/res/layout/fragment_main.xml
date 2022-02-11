@@ -21,26 +21,15 @@
         >
 
         <View
-            android:id="@+id/volumeRound1"
-            android:layout_width="220dp"
-            android:layout_height="220dp"
-            android:background="@drawable/round_button"
-            android:gravity="center_vertical|center_horizontal"
-            android:backgroundTint="@color/lightGreen"
-            android:layout_gravity="center"
-            android:alpha="0.5"
-            android:visibility="invisible"
-            />
-        <View
             android:id="@+id/volumeRound0"
-            android:layout_width="180dp"
-            android:layout_height="180dp"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:background="@drawable/round_button"
             android:gravity="center_vertical|center_horizontal"
             android:backgroundTint="@color/lightGreen"
             android:layout_gravity="center"
             android:alpha="0.5"
-            android:visibility="invisible"
+            android:visibility="visible"
             />
         <ImageButton
             android:id="@+id/switchRecordButton"

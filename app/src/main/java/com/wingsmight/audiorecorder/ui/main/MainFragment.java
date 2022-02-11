@@ -4,6 +4,8 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +36,7 @@ public class MainFragment extends Fragment {
     private VoiceRecorder voiceRecorder;
 
     private ImageButton switchRecordButton;
-    private View[] volumeRounds = new View[2];
+    private View volumeRound;
     private TextView timerTextView;
     private ContentLoadingProgressBar modelLoadingBar;
 
@@ -64,14 +66,35 @@ public class MainFragment extends Fragment {
 
         timerTextView = binding.timer;
 
-        volumeRounds[0] = binding.volumeRound0;
-        volumeRounds[1] = binding.volumeRound1;
+        volumeRound = binding.volumeRound0;
+        volumeRound.setVisibility(View.INVISIBLE);
 
         modelLoadingBar = binding.modelLoadingBar;
         modelLoadingBar.show();
 
         voiceRecorder = new VoiceRecorder(getContext());
         speechListener = new SpeechRecognitionListener(voiceRecorder);
+
+        ViewGroup.LayoutParams layoutParams = volumeRound.getLayoutParams();
+        int initRadius =  layoutParams.width;
+
+        Handler updateVolumeRoundRadiusHandler = new Handler(Looper.getMainLooper());
+        updateVolumeRoundRadiusHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                float volume = voiceRecorder.getVolume();
+                if (volume != 0)
+                {
+                    ViewGroup.LayoutParams layoutParams = volumeRound.getLayoutParams();
+                    //int volumeRadius = (int) (volume * 0.33);
+                    layoutParams.width = initRadius + (int) volume;
+                    layoutParams.height = initRadius + (int) volume;
+                    volumeRound.setLayoutParams(layoutParams);
+                }
+
+                updateVolumeRoundRadiusHandler.postDelayed(this, 20);
+            }
+        });
 
         return root;
     }
@@ -93,21 +116,16 @@ public class MainFragment extends Fragment {
     private void startRecording() {
         switchRecordButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_stop_square));
         timerTextView.setVisibility(View.VISIBLE);
-        setVolumeRoundsVisibility(View.VISIBLE);
+        volumeRound.setVisibility(View.VISIBLE);
 
         speechRecognize.recognizeMicrophone(speechListener);
     }
     private void stopRecording() {
         switchRecordButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_play_arrow_24));
         timerTextView.setVisibility(View.INVISIBLE);
-        setVolumeRoundsVisibility(View.INVISIBLE);
+        volumeRound.setVisibility(View.INVISIBLE);
 
         speechRecognize.stop();
         voiceRecorder.stop();
-    }
-    private void setVolumeRoundsVisibility(int visibility) {
-        for (View volumeRound : volumeRounds) {
-            volumeRound.setVisibility(visibility);
-        }
     }
 }

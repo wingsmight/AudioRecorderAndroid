@@ -19,6 +19,7 @@ public class VoiceRecorder {
     private Handler autoStopHandler;
     private Runnable stopAtLimit;
     private Runnable autoStop;
+    private float volume;
 
 
     public VoiceRecorder(Context context) {
@@ -37,6 +38,20 @@ public class VoiceRecorder {
         recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         recorder.setOutputFile(fileName);
         recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+
+        Handler showAmplitudeHandler = new Handler(Looper.getMainLooper());
+        showAmplitudeHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (recorder == null)
+                    return;
+
+                volume = (float) Math.log10(Math.max(1, recorder.getMaxAmplitude() - 500)) * ScreenUtils.dp2px(context, 20);
+                Log.i("VoiceRecorder", String.valueOf(volume));
+
+                showAmplitudeHandler.postDelayed(this, 50);
+            }
+        });
 
         try {
             recorder.prepare();
@@ -78,5 +93,9 @@ public class VoiceRecorder {
     public void resetAutoStop() {
         autoStopHandler.removeCallbacks(autoStop);
         autoStopHandler.postDelayed(autoStop, MAX_SILENCE_DURATION_MILLISECONDS);
+    }
+    public float getVolume()
+    {
+        return volume;
     }
 }

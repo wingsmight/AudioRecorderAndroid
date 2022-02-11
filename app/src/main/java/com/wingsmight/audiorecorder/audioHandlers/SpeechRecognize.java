@@ -20,6 +20,8 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.widget.Button;
@@ -51,6 +53,16 @@ public class SpeechRecognize {
 
 
     public SpeechRecognize(Context context, Runnable onReady) {
+//        String outputPath = (new File("model-small-ru-0.22", "model")).getAbsolutePath();
+//        this.model = new Model(outputPath);
+//
+//        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                onReady.run();
+//            }
+//        }, 100);
+
         StorageService.unpack(context, "model-small-ru-0.22", "model",
                 (model) -> {
                     this.model = model;
