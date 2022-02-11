@@ -22,8 +22,5 @@
         android:name="com.wingsmight.audiorecorder.ui.records.RecordsFragment"
         android:label="@string/title_records_tab"
         tools:layout="@layout/fragment_records" />
-<!--    <fragment-->
-<!--        android:id="@+id/settingsFragment"-->
-<!--        android:name="com.wingsmight.audiorecorder.ui.settings.SettingsPreferencesFragment"-->
-<!--        android:label="SettingsFragment" />-->
+
 </navigation>

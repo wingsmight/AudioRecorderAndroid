@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.wingsmight.audiorecorder.audioHandlers.VoiceRecorder;
+import com.wingsmight.audiorecorder.data.Record;
 import com.wingsmight.audiorecorder.databinding.FragmentRecordsBinding;
 
 import java.util.Date;
@@ -21,11 +23,6 @@ import java.util.Date;
 public class RecordsFragment extends Fragment {
     private FragmentRecordsBinding binding;
     private RecyclerView recyclerView;
-
-    private Record[] testRecords = {
-            new Record(new Date(102)),
-            new Record(new Date(10400505))
-    };
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -35,7 +32,7 @@ public class RecordsFragment extends Fragment {
         View root = binding.getRoot();
 
         recyclerView = binding.recordsList;
-        recyclerView.setAdapter(new RecordsAdapter(getContext(), testRecords, recyclerView));
+        recyclerView.setAdapter(new RecordsAdapter(getContext(), VoiceRecorder.records, recyclerView));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return root;

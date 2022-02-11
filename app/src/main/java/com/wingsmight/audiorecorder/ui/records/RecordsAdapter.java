@@ -13,9 +13,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.wingsmight.audiorecorder.R;
+import com.wingsmight.audiorecorder.data.Record;
 
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.RecordViewHolder> {
@@ -23,13 +25,13 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.RecordVi
 
 
     private Context context;
-    private Record[] records;
+    private ArrayList<Record> records;
     private RecyclerView recyclerView;
 
     private int expandedPosition = DEFAULT_EXPANDED_POSITION;
 
 
-    public RecordsAdapter(Context context, Record[] records, RecyclerView recyclerView) {
+    public RecordsAdapter(Context context, ArrayList<Record> records, RecyclerView recyclerView) {
         this.context = context;
         this.records = records;
         this.recyclerView = recyclerView;
@@ -46,7 +48,7 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.RecordVi
 
     @Override
     public void onBindViewHolder(@NonNull RecordViewHolder holder, int position) {
-        holder.show(records[position]);
+        holder.show(records.get(position));
 
         final boolean isExpanded = position == expandedPosition;
         holder.setDetailsVisibility(isExpanded ? View.VISIBLE : View.GONE);
@@ -64,7 +66,7 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.RecordVi
 
     @Override
     public int getItemCount() {
-        return records.length;
+        return records.size();
     }
 
     public class RecordViewHolder extends RecyclerView.ViewHolder {

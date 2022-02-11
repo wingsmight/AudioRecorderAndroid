@@ -68,4 +68,7 @@ public final class CloudDatabase {
                     }
                 });
     }
+    public static void uploadRecord(String lastRecordFileName) {
+
+    }
 }
