@@ -20,6 +20,7 @@ import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
 
 import com.wingsmight.audiorecorder.R;
+import com.wingsmight.audiorecorder.Stopwatch;
 import com.wingsmight.audiorecorder.audioHandlers.SpeechRecognitionListener;
 import com.wingsmight.audiorecorder.audioHandlers.SpeechRecognize;
 import com.wingsmight.audiorecorder.audioHandlers.VoiceRecorder;
@@ -34,6 +35,7 @@ public class MainFragment extends Fragment {
     private SpeechRecognize speechRecognize;
     private SpeechRecognitionListener speechListener;
     private VoiceRecorder voiceRecorder;
+    private Stopwatch stopwatch;
 
     private ImageButton switchRecordButton;
     private View volumeRound;
@@ -86,7 +88,7 @@ public class MainFragment extends Fragment {
                 if (volume != 0)
                 {
                     ViewGroup.LayoutParams layoutParams = volumeRound.getLayoutParams();
-                    //int volumeRadius = (int) (volume * 0.33);
+
                     layoutParams.width = initRadius + (int) volume;
                     layoutParams.height = initRadius + (int) volume;
                     volumeRound.setLayoutParams(layoutParams);
@@ -95,6 +97,29 @@ public class MainFragment extends Fragment {
                 updateVolumeRoundRadiusHandler.postDelayed(this, 20);
             }
         });
+
+        stopwatch = new Stopwatch(new Stopwatch.IStopWatch() {
+            @Override
+            public void onSetTime(String time) {
+                timerTextView.setText(time);
+            }
+        });
+
+        voiceRecorder.callback = new VoiceRecorder.IRecordable() {
+            @Override
+            public void onStart() {
+                volumeRound.setVisibility(View.VISIBLE);
+                timerTextView.setVisibility(View.VISIBLE);
+                stopwatch.start();
+            }
+
+            @Override
+            public void onStop() {
+                volumeRound.setVisibility(View.GONE);
+                timerTextView.setVisibility(View.GONE);
+                stopwatch.stop();
+            }
+        };
 
         return root;
     }
@@ -115,8 +140,6 @@ public class MainFragment extends Fragment {
 
     private void startRecording() {
         switchRecordButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_stop_square));
-        timerTextView.setVisibility(View.VISIBLE);
-        volumeRound.setVisibility(View.VISIBLE);
 
         speechRecognize.recognizeMicrophone(speechListener);
     }

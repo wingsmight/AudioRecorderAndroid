@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wingsmight.audiorecorder.CloudDatabase;
+import com.wingsmight.audiorecorder.Stopwatch;
 import com.wingsmight.audiorecorder.data.Record;
 
 import org.jetbrains.annotations.NotNull;
@@ -48,6 +49,7 @@ public class VoiceRecorder {
     private float volume;
     private String lastRecordFileName;
     public static ArrayList<Record> records = new ArrayList<>();
+    public IRecordable callback;
 
 
     public VoiceRecorder(Context context) {
@@ -104,6 +106,10 @@ public class VoiceRecorder {
         autoStopHandler.postDelayed(autoStop, MAX_SILENCE_DURATION_MILLISECONDS);
 
         resetAutoStop();
+
+        if (callback != null) {
+            callback.onStart();
+        }
     }
     public void stop() {
         if (!isRecording())
@@ -121,6 +127,10 @@ public class VoiceRecorder {
         CloudDatabase.uploadRecord(lastRecordFileName);
 
         checkForRecordLimit();
+
+        if (callback != null) {
+            callback.onStop();
+        }
     }
     public boolean isRecording() {
         return recorder != null;
@@ -196,5 +206,11 @@ public class VoiceRecorder {
                 }
             }
         }
+    }
+
+
+    public interface IRecordable {
+        void onStart();
+        void onStop();
     }
 }
