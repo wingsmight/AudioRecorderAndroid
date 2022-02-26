@@ -1,5 +1,6 @@
 package com.wingsmight.audiorecorder.data;
 
+import android.media.MediaMetadataRetriever;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -25,5 +26,11 @@ public class Record {
     }
     public void setCreatingDate(Date creatingDate) {
         this.creatingDate = creatingDate;
+    }
+    public long getDuration() {
+        MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
+        mediaMetadataRetriever.setDataSource(fileName);
+        String durationStr = mediaMetadataRetriever.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION);
+        return Long.parseLong(durationStr);
     }
 }

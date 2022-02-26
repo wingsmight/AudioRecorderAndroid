@@ -13,4 +13,12 @@ public class StringExt {
             return "";
         }
     }
+    public static String getTime(long durationInMillis) {
+        long millis = durationInMillis % 1000;
+        long second = (durationInMillis / 1000) % 60;
+        long minute = (durationInMillis / (1000 * 60)) % 60;
+        long hour = (durationInMillis / (1000 * 60 * 60)) % 24;
+
+        return String.format("%d:%02d", minute, second);
+    }
 }
