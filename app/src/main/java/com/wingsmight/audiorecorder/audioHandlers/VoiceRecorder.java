@@ -16,6 +16,7 @@ import com.google.gson.reflect.TypeToken;
 import com.wingsmight.audiorecorder.CloudDatabase;
 import com.wingsmight.audiorecorder.Stopwatch;
 import com.wingsmight.audiorecorder.data.Record;
+import com.wingsmight.audiorecorder.ui.login.User;
 
 import org.jetbrains.annotations.NotNull;
 

@@ -43,6 +43,7 @@ public class MainFragment extends Fragment {
     private ContentLoadingProgressBar modelLoadingBar;
 
     private boolean isRecording = false;
+    private boolean isModelReady = false;
 
 
     @SuppressLint("RestrictedApi")
@@ -72,7 +73,12 @@ public class MainFragment extends Fragment {
         volumeRound.setVisibility(View.INVISIBLE);
 
         modelLoadingBar = binding.modelLoadingBar;
-        modelLoadingBar.show();
+        if (!isModelReady)
+        {
+            modelLoadingBar.show();
+        } else {
+            modelLoadingBar.hide();
+        }
 
         voiceRecorder = new VoiceRecorder(getContext());
         speechListener = new SpeechRecognitionListener(voiceRecorder);
@@ -136,6 +142,8 @@ public class MainFragment extends Fragment {
 
         modelLoadingBar.hide();
         switchRecordButton.setEnabled(true);
+
+        isModelReady = true;
     }
 
     private void startRecording() {

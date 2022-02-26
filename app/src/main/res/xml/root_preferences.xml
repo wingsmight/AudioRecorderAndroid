@@ -67,7 +67,7 @@
 
         <Preference
             app:key="cloudSize"
-            app:title="34 kB  /   2 GB"
+            app:title="0 KB / 200 MB"
             app:selectable="false"
             app:iconSpaceReserved="false"
             app:singleLineTitle="true"

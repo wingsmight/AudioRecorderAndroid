@@ -21,4 +21,21 @@ public class StringExt {
 
         return String.format("%d:%02d", minute, second);
     }
+    public static String getSize(int bytes) {
+        String cnt_size;
+
+        int size_kb = bytes /1024;
+        int size_mb = size_kb / 1024;
+        int size_gb = size_mb / 1024 ;
+
+        if (size_gb > 0){
+            cnt_size = size_gb + " GB";
+        }else if(size_mb > 0){
+            cnt_size = size_mb + " MB";
+        }else{
+            cnt_size = size_kb + " KB";
+        }
+
+        return cnt_size;
+    }
 }

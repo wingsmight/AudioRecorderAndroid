@@ -17,13 +17,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.util.Consumer;
 import androidx.preference.EditTextPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import com.wingsmight.audiorecorder.CloudDatabase;
 import com.wingsmight.audiorecorder.MainActivity;
 import com.wingsmight.audiorecorder.R;
+import com.wingsmight.audiorecorder.extensions.StringExt;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -85,6 +88,20 @@ public class SettingsPreferencesFragment extends PreferenceFragmentCompat {
 
         Preference emailPref = findPreference("email");
         emailPref.setSummary(sharedPreferences.getString("email", "01.01.2001"));
+
+        CloudDatabase.getStorageSize(getActivity(), new Consumer<Integer>() {
+            @Override
+            public void accept(Integer storageSize) {
+                Preference cloudSizePref = findPreference("cloudSize");
+
+                CloudDatabase.getUsedStorageSize(new Consumer<Integer>() {
+                    @Override
+                    public void accept(Integer storedSize) {
+                        cloudSizePref.setTitle(StringExt.getSize(storedSize) + " / " + StringExt.getSize(storageSize));
+                    }
+                });
+            }
+        });
     }
 
     @Override
