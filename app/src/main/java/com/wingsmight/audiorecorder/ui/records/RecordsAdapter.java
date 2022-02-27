@@ -1,6 +1,8 @@
 package com.wingsmight.audiorecorder.ui.records;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Handler;
 import android.text.Layout;
 import android.text.format.DateFormat;
@@ -24,10 +26,12 @@ import com.wingsmight.audiorecorder.audioHandlers.PlayerContract;
 import com.wingsmight.audiorecorder.data.Record;
 import com.wingsmight.audiorecorder.extensions.StringExt;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.logging.FileHandler;
 
 public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.RecordViewHolder> {
     private static final int DEFAULT_EXPANDED_POSITION = -1;
@@ -94,6 +98,7 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.RecordVi
         private ImageButton backward10Button;
         private ImageButton forward10Button;
         private ImageButton playRecordButton;
+        private ImageButton shareRecordButton;
 
         private Record record;
         private AudioPlayer player;
@@ -124,6 +129,7 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.RecordVi
             backward10Button = itemView.findViewById(R.id.backward10Button);
             forward10Button = itemView.findViewById(R.id.forward10Button);
             playRecordButton = itemView.findViewById(R.id.playRecordButton);
+            shareRecordButton = itemView.findViewById(R.id.shareRecordButton);
 
             player = AudioPlayer.getInstance();
             player.addPlayerCallback(new PlayerContract.PlayerCallback() {
@@ -223,6 +229,17 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.RecordVi
             });
 
             currentPlaybackTime.setText("0:00");
+
+            shareRecordButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent shareIntent = new Intent();
+                    shareIntent.setAction(Intent.ACTION_SEND);
+                    shareIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(new File(record.fileName)));
+                    shareIntent.setType("audio/3gp");
+                    itemView.getContext().startActivity(Intent.createChooser(shareIntent, null));
+                }
+            });
         }
 
 
