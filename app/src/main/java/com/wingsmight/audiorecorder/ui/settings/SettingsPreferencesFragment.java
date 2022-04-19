@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,38 +34,9 @@ import org.jetbrains.annotations.NotNull;
 import java.text.DateFormat;
 
 public class SettingsPreferencesFragment extends PreferenceFragmentCompat {
-
-    private SharedPreferences.OnSharedPreferenceChangeListener preferenceChangeListener;
-
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.root_preferences, rootKey);
-
-        preferenceChangeListener = new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String newValue) {
-                Log.i("newValue", newValue);
-
-                if (newValue.equals(getResources().getString(R.string.themeModeListKey))) {
-                    ListPreference listPreference = findPreference(newValue);
-                    String currValue = listPreference.getValue();
-
-                    if (currValue.equals(getResources().getString(R.string.pf_light_on))) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    } else if (currValue.equals(getResources().getString(R.string.pf_light_off))) {
-                        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    } else {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
-                        } else {
-                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
-                        }
-                    }
-
-                    restartApp();
-                }
-            }
-        };
     }
 
     @Override
@@ -72,7 +44,6 @@ public class SettingsPreferencesFragment extends PreferenceFragmentCompat {
         super.onResume();
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        sharedPreferences.registerOnSharedPreferenceChangeListener(preferenceChangeListener);
 
         Preference preference = findPreference("doNotDisturbInterval");
 
@@ -102,13 +73,30 @@ public class SettingsPreferencesFragment extends PreferenceFragmentCompat {
                 });
             }
         });
-    }
 
-    @Override
-    public void onPause() {
-        super.onPause();
+        Preference themeList = findPreference("themeMode");
+        String currentNightModeValue = sharedPreferences.getString("themeMode", getResources().getString(R.string.pf_dark_auto));
 
-        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(preferenceChangeListener);
+        themeList.setSummary(currentNightModeValue);
+        themeList.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                String currentValue = newValue.toString();
+                themeList.setSummary(currentValue);
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("themeMode", currentValue);
+                editor.apply();
+
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        setNightMode(currentValue);
+                    }
+                }, 100);
+
+                return true;
+            }
+        });
     }
 
 
@@ -120,5 +108,27 @@ public class SettingsPreferencesFragment extends PreferenceFragmentCompat {
         AlarmManager mgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 100, mPendingIntent);
         System.exit(0);
+    }
+    private String convertNightModeToString() {
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_NO) {
+            return getResources().getString(R.string.pf_light_on);
+        } else if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            return getResources().getString(R.string.pf_light_off);
+        } else {
+            return getResources().getString(R.string.pf_dark_auto);
+        }
+    }
+    private void setNightMode(String currentValue) {
+        if (currentValue.equals(getResources().getString(R.string.pf_light_on))) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        } else if (currentValue.equals(getResources().getString(R.string.pf_light_off))) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
+            }
+        }
     }
 }

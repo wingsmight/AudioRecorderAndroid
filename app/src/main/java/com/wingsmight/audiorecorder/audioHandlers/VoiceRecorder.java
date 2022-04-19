@@ -17,6 +17,7 @@ import com.wingsmight.audiorecorder.CloudDatabase;
 import com.wingsmight.audiorecorder.Stopwatch;
 import com.wingsmight.audiorecorder.data.Record;
 import com.wingsmight.audiorecorder.ui.login.User;
+import com.wingsmight.audiorecorder.ui.records.RecordsAdapter;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -41,6 +42,9 @@ public class VoiceRecorder {
     private static long MAX_SILENCE_DURATION_MILLISECONDS = 10 * 1000; // 10 sec
     private static long LIMIT_RECORD_DURATION_MILLISECONDS = 60 * 3 * 1000;// 3 mins
 
+    public static ArrayList<Record> records = new ArrayList<>();
+    public IRecordable callback;
+
     private Context context;
     private MediaRecorder recorder = null;
     private Handler stopAtLimitHandler;
@@ -49,12 +53,12 @@ public class VoiceRecorder {
     private Runnable autoStop;
     private float volume;
     private String lastRecordFileName;
-    public static ArrayList<Record> records = new ArrayList<>();
-    public IRecordable callback;
+    private RecordsAdapter recordsAdapter;
 
 
-    public VoiceRecorder(Context context) {
+    public VoiceRecorder(Context context, RecordsAdapter recordsAdapter) {
         this.context = context;
+        this.recordsAdapter = recordsAdapter;
 
         loadRecords();
     }
@@ -124,6 +128,7 @@ public class VoiceRecorder {
         recorder = null;
 
         saveRecord(lastRecordFileName);
+        recordsAdapter.notifyDataSetChanged();
 
         CloudDatabase.uploadRecord(lastRecordFileName);
 
@@ -157,7 +162,7 @@ public class VoiceRecorder {
     private void saveRecord(String fileName) {
         Record newRecord = new Record(fileName, Calendar.getInstance().getTime());
 
-        records.add(newRecord);
+        records.add(0, newRecord);
 
         saveRecords();
     }

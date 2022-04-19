@@ -6,6 +6,7 @@
         <item name="colorPrimaryVariant">@color/lightGreen</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorAccent">@color/darkGreen</item>
+        <item name="android:background">@color/white</item>
 
         <!-- Secondary brand color. -->
         <!--        <item name="colorSecondary">@color/teal_200</item>-->

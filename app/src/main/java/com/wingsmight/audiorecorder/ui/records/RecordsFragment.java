@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.wingsmight.audiorecorder.R;
 import com.wingsmight.audiorecorder.audioHandlers.VoiceRecorder;
 import com.wingsmight.audiorecorder.data.Record;
 import com.wingsmight.audiorecorder.databinding.FragmentRecordsBinding;
@@ -21,26 +22,25 @@ import com.wingsmight.audiorecorder.databinding.FragmentRecordsBinding;
 import java.util.Date;
 
 public class RecordsFragment extends Fragment {
-    private FragmentRecordsBinding binding;
     private RecyclerView recyclerView;
+    private RecordsAdapter recordsAdapter;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_records, container, false);
+    }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        recyclerView = (RecyclerView)view.findViewById(R.id.recordsList);
+        recordsAdapter = new RecordsAdapter(getContext(), VoiceRecorder.records, recyclerView);
 
-        binding = FragmentRecordsBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-        recyclerView = binding.recordsList;
-        recyclerView.setAdapter(new RecordsAdapter(getContext(), VoiceRecorder.records, recyclerView));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        return root;
+        recyclerView.setAdapter(recordsAdapter);
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+
+    public RecordsAdapter getRecordsAdapter() {
+        return  recordsAdapter;
     }
 }

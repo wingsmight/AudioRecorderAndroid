@@ -14,25 +14,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.wingsmight.audiorecorder.R;
 import com.wingsmight.audiorecorder.Stopwatch;
 import com.wingsmight.audiorecorder.audioHandlers.SpeechRecognitionListener;
 import com.wingsmight.audiorecorder.audioHandlers.SpeechRecognize;
 import com.wingsmight.audiorecorder.audioHandlers.VoiceRecorder;
+import com.wingsmight.audiorecorder.data.Record;
 import com.wingsmight.audiorecorder.databinding.FragmentMainBinding;
+import com.wingsmight.audiorecorder.ui.records.RecordsFragment;
 
 import org.vosk.LibVosk;
 import org.vosk.LogLevel;
 import org.vosk.android.SpeechService;
 
 public class MainFragment extends Fragment {
-    private FragmentMainBinding binding;
-    private SpeechRecognize speechRecognize;
     private SpeechRecognitionListener speechListener;
     private VoiceRecorder voiceRecorder;
     private Stopwatch stopwatch;
@@ -43,16 +45,14 @@ public class MainFragment extends Fragment {
     private ContentLoadingProgressBar modelLoadingBar;
 
     private boolean isRecording = false;
-    private boolean isModelReady = false;
 
 
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_main, container, false);
+    }
     @SuppressLint("RestrictedApi")
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        binding = FragmentMainBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
-
-        switchRecordButton = binding.switchRecordButton;
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        switchRecordButton = view.findViewById(R.id.switchRecordButton);
         switchRecordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,22 +65,24 @@ public class MainFragment extends Fragment {
                 }
             }
         });
-        switchRecordButton.setEnabled(false);
+        switchRecordButton.setEnabled(SpeechRecognize.isReady());
 
-        timerTextView = binding.timer;
+        timerTextView = view.findViewById(R.id.timer);
 
-        volumeRound = binding.volumeRound0;
+        volumeRound = view.findViewById(R.id.volumeRound0);
         volumeRound.setVisibility(View.INVISIBLE);
 
-        modelLoadingBar = binding.modelLoadingBar;
-        if (!isModelReady)
+        modelLoadingBar = view.findViewById(R.id.modelLoadingBar);
+        if (!SpeechRecognize.isReady())
         {
             modelLoadingBar.show();
         } else {
             modelLoadingBar.hide();
         }
 
-        voiceRecorder = new VoiceRecorder(getContext());
+        FragmentManager fragmentManager = getParentFragmentManager();
+        RecordsFragment recordsFragment = (RecordsFragment) fragmentManager.findFragmentByTag("recordsFragment");
+        voiceRecorder = new VoiceRecorder(getContext(), recordsFragment.getRecordsAdapter());
         speechListener = new SpeechRecognitionListener(voiceRecorder);
 
         ViewGroup.LayoutParams layoutParams = volumeRound.getLayoutParams();
@@ -126,37 +128,29 @@ public class MainFragment extends Fragment {
                 stopwatch.stop();
             }
         };
-
-        return root;
     }
 
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-        binding = null;
-    }
-    public void startService(SpeechRecognize speechRecognize) {
-        this.speechRecognize = speechRecognize;
-
+    public void startService() {
         modelLoadingBar.hide();
         switchRecordButton.setEnabled(true);
-
-        isModelReady = true;
     }
 
     private void startRecording() {
         switchRecordButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_stop_square));
 
-        speechRecognize.recognizeMicrophone(speechListener);
+        SpeechRecognize.recognizeMicrophone(speechListener);
     }
     private void stopRecording() {
+        SpeechRecognize.stop();
+        voiceRecorder.stop();
+
         switchRecordButton.setImageDrawable(getResources().getDrawable(R.drawable.ic_play_arrow_24));
         timerTextView.setVisibility(View.INVISIBLE);
         volumeRound.setVisibility(View.INVISIBLE);
 
-        speechRecognize.stop();
-        voiceRecorder.stop();
+        volumeRound.setVisibility(View.GONE);
+        timerTextView.setVisibility(View.GONE);
+        stopwatch.stop();
     }
 }

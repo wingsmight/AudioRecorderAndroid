@@ -23,6 +23,7 @@ import com.google.android.material.slider.Slider;
 import com.wingsmight.audiorecorder.R;
 import com.wingsmight.audiorecorder.audioHandlers.AudioPlayer;
 import com.wingsmight.audiorecorder.audioHandlers.PlayerContract;
+import com.wingsmight.audiorecorder.audioHandlers.VoiceRecorder;
 import com.wingsmight.audiorecorder.data.Record;
 import com.wingsmight.audiorecorder.extensions.StringExt;
 
@@ -38,7 +39,6 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.RecordVi
 
 
     private Context context;
-    private ArrayList<Record> records;
     private RecyclerView recyclerView;
 
     private int expandedPosition = DEFAULT_EXPANDED_POSITION;
@@ -46,22 +46,21 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.RecordVi
 
     public RecordsAdapter(Context context, ArrayList<Record> records, RecyclerView recyclerView) {
         this.context = context;
-        this.records = records;
         this.recyclerView = recyclerView;
     }
 
     @NonNull
     @Override
     public RecordViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.record, parent, false);
+        //View view = LayoutInflater.from(context).inflate(R.layout.record, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.record, parent, false);
 
         return new RecordViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecordViewHolder holder, int position) {
-        holder.show(records.get(position));
+        holder.show(VoiceRecorder.records.get(position));
 
         final boolean isExpanded = position == expandedPosition;
         holder.setDetailsVisibility(isExpanded ? View.VISIBLE : View.GONE);
@@ -85,7 +84,7 @@ public class RecordsAdapter extends RecyclerView.Adapter<RecordsAdapter.RecordVi
 
     @Override
     public int getItemCount() {
-        return records.size();
+        return VoiceRecorder.records.size();
     }
 
     public class RecordViewHolder extends RecyclerView.ViewHolder {

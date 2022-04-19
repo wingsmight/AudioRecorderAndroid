@@ -46,13 +46,13 @@ import androidx.arch.core.util.Function;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-public class SpeechRecognize {
-    private Model model;
-    private SpeechService speechService;
-    private SpeechStreamService speechStreamService;
+public final class SpeechRecognize {
+    private static boolean isModelLoading;
+    private static Model model;
+    private static SpeechService speechService;
 
 
-    public SpeechRecognize(Context context, Runnable onReady) {
+    public static void Init(Context context, Runnable onReady) {
 //        String outputPath = (new File("model-small-ru-0.22", "model")).getAbsolutePath();
 //        this.model = new Model(outputPath);
 //
@@ -63,35 +63,20 @@ public class SpeechRecognize {
 //            }
 //        }, 100);
 
-        StorageService.unpack(context, "model-small-ru-0.22", "model",
-                (model) -> {
-                    this.model = model;
+        if (!isModelLoading || model != null) {
+            isModelLoading = true;
+            StorageService.unpack(context, "model-small-ru-0.22", "model",
+                    (createdModel) -> {
+                        model = createdModel;
 
-                    onReady.run();
-                },
-                (exception) -> Log.e("AudioRecognize", "Failed to unpack the model" + exception.getMessage()));
-    }
-
-
-    public void recognizeFile(InputStream fileStream, RecognitionListener listener) {
-        if (speechStreamService != null) {
-            speechStreamService.stop();
-            speechStreamService = null;
-        } else {
-            try {
-                Recognizer rec = new Recognizer(model, 16000.f, "[\"one zero zero zero one\", " +
-                        "\"oh zero one two three four five six seven eight nine\", \"[unk]\"]");
-
-                if (fileStream.skip(44) != 44) throw new IOException("File too short");
-
-                speechStreamService = new SpeechStreamService(rec, fileStream, 16000);
-                speechStreamService.start(listener);
-            } catch (IOException e) {
-                Log.e("AudioRecognize", e.getMessage());
-            }
+                        onReady.run();
+                    },
+                    (exception) -> Log.e("AudioRecognize", "Failed to unpack the model" + exception.getMessage()));
         }
     }
-    public void recognizeMicrophone(RecognitionListener listener) {
+
+
+    public static void recognizeMicrophone(RecognitionListener listener) {
         if (speechService != null) {
             speechService.stop();
             speechService = null;
@@ -105,14 +90,17 @@ public class SpeechRecognize {
             }
         }
     }
-    public void pause() {
+    public static void pause() {
         if (speechService != null) {
             speechService.setPause(true);
         }
     }
-    public void stop() {
+    public static void stop() {
         if (speechService != null) {
             speechService.stop();
         }
+    }
+    public static boolean isReady() {
+        return model != null;
     }
 }
