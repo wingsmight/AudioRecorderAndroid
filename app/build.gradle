@@ -11,8 +11,8 @@ android {
         applicationId "com.wingsmight.audiorecorder"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 2
-        versionName "1.0.1"
+        versionCode 4
+        versionName "1.0.3"
         ndk {
             abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86_64', 'x86'
         }
@@ -56,4 +56,6 @@ dependencies {
     implementation 'net.java.dev.jna:jna:5.8.0@aar'
     implementation group: 'com.alphacephei', name: 'vosk-android', version: '0.3.32+'
     implementation project(':models')
+    implementation "com.android.billingclient:billing:4.1.0"
+    implementation 'com.anjlab.android.iab.v3:library:2.0.3'
 }

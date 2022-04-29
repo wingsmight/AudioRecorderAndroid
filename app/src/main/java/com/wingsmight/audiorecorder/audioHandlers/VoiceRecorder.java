@@ -154,6 +154,7 @@ public class VoiceRecorder {
     private String generateNewFileName()
     {
         String fileName = context.getExternalCacheDir().getAbsolutePath();
+        fileName = fileName.substring(fileName.lastIndexOf("/")+1);
         fileName += Calendar.getInstance().getTime();
         fileName += ".3gp";
 

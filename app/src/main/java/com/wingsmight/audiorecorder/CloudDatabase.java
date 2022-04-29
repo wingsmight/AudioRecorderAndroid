@@ -13,6 +13,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -31,6 +32,10 @@ import java.util.Map;
 public final class CloudDatabase {
     private static long storageSize = CloudStoragePlan.getSize(CloudStoragePlan.Plan.free200MB);
     private static long filledStorageSize = 0;
+
+    private static long usedStorageSize = 0;
+    private static Double storageFillPercent = 0.0;
+    private static long availableStorageSize = CloudStoragePlan.getSize(CloudStoragePlan.Plan.free200MB);
 
 
     public static void addUser(User user) {
@@ -83,6 +88,10 @@ public final class CloudDatabase {
                 });
     }
     public static void uploadRecord(String fileName) {
+        if (isStorageFull()) {
+            return;
+        }
+
         String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         StorageReference ref = firebaseStorage.getReference().child("AudioRecords").child(currentUserId).child(fileName);
@@ -93,21 +102,21 @@ public final class CloudDatabase {
 
         ref.putFile(Uri.fromFile(new File(fileName)), metadata);
 
-
+        updateUsedStorageSize();
     }
-    public static void getStorageSize(Context context, Consumer<Integer> onSuccess) {
+    public static void getStorageSize(Context context, Consumer<Long> onSuccess) {
         SharedPreferences sharedPreferences = context.getSharedPreferences(context.getString(R.string.preference_file_key), Context.MODE_PRIVATE);
         String email = sharedPreferences.getString("email", "Test01@test.com");
         loadUser(email, new Consumer<Map<String, Object>>() {
             @Override
             public void accept(Map<String, Object> userData) {
-                int storedSize = ((Long)userData.get("storageSize")).intValue();
+                long storedSize = (Long)userData.get("storageSize");
                 onSuccess.accept(storedSize);
             }
         });
     }
-    public static void getUsedStorageSize(Consumer<Integer> onSuccess) {
-        final int[] storedBytes = {0};
+    public static void getUsedStorageSize(Consumer<Long> onSuccess) {
+        final long[] storedBytes = {0};
         String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
         StorageReference ref = firebaseStorage.getReference().child("AudioRecords").child(currentUserId);
@@ -124,5 +133,67 @@ public final class CloudDatabase {
                 onSuccess.accept(storedBytes[0]);
             }
         });
+    }
+    public static void updateUsedStorageSize() {
+        final long[] storedBytes = {0};
+        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+        StorageReference ref = firebaseStorage.getReference().child("AudioRecords").child(currentUserId);
+
+        ref.listAll().addOnSuccessListener(new OnSuccessListener<ListResult>() {
+            @Override
+            public void onSuccess(ListResult storageListResult) {
+                List<StorageReference> items = storageListResult.getItems();
+                for (StorageReference item : items) {
+                    item.getMetadata().addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
+                        @Override
+                        public void onSuccess(StorageMetadata itemMetadata) {
+                            storedBytes[0] += itemMetadata.getSizeBytes();
+                            usedStorageSize = storedBytes[0];
+                            storageFillPercent = (double) usedStorageSize / (double) availableStorageSize;
+
+                            // save it
+                        }
+                    });
+                }
+            }
+        });
+    }
+    public static void changeStoragePlan(CloudStoragePlan.Plan newPlan, Consumer<Boolean> onSuccess) {
+        availableStorageSize = CloudStoragePlan.getSize(newPlan);
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userEmail = user.getEmail();
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
+
+        // Read the documents at a specific path
+        database.collection("users")
+                .whereEqualTo("email", userEmail)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                document.getReference().update(new HashMap<String, Object>()
+                                {{
+                                    put("storageSize", availableStorageSize);
+                                }});
+
+                                storageFillPercent = (double) usedStorageSize / (double) availableStorageSize;
+
+                                //save it
+
+                                onSuccess.accept(true);
+                            }
+                        } else {
+                            Log.w("CloudDatabase", "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
+
+    private static boolean isStorageFull() {
+        return usedStorageSize >= availableStorageSize;
     }
 }

@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.android.vending.BILLING" />
 
     <application
         android:allowBackup="true"
@@ -15,28 +17,33 @@
         <activity
             android:name=".ui.settings.DoNotDisturbIntervalActivity"
             android:label="@string/title_activity_do_not_disturb_interval"
-            android:theme="@style/Theme.AudioRecorder.NoActionBar"/>
+            android:theme="@style/Theme.AudioRecorder.NoActionBar" />
         <activity
             android:name=".ui.settings.AppInfoActivity"
             android:label="@string/title_activity_app_info"
-            android:theme="@style/Theme.AudioRecorder"/>
+            android:theme="@style/Theme.AudioRecorder" />
+        <activity
+            android:name=".ui.settings.CloudPlan.CloudPlanActivity"
+            android:label="@string/title_activity_cloud_plan"
+            android:theme="@style/Theme.AudioRecorder" />
         <activity
             android:name=".ui.login.LogInActivity"
             android:label="Вход"
-            android:theme="@style/Theme.AudioRecorder"/>
+            android:theme="@style/Theme.AudioRecorder" />
         <activity
             android:name=".ui.login.SignUpActivity"
             android:exported="true"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"/>
+            android:label="@string/app_name" />
     </application>
 
 </manifest>

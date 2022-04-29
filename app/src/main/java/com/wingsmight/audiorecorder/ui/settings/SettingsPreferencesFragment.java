@@ -60,14 +60,14 @@ public class SettingsPreferencesFragment extends PreferenceFragmentCompat {
         Preference emailPref = findPreference("email");
         emailPref.setSummary(sharedPreferences.getString("email", "01.01.2001"));
 
-        CloudDatabase.getStorageSize(getActivity(), new Consumer<Integer>() {
+        CloudDatabase.getStorageSize(getActivity(), new Consumer<Long>() {
             @Override
-            public void accept(Integer storageSize) {
+            public void accept(Long storageSize) {
                 Preference cloudSizePref = findPreference("cloudSize");
 
-                CloudDatabase.getUsedStorageSize(new Consumer<Integer>() {
+                CloudDatabase.getUsedStorageSize(new Consumer<Long>() {
                     @Override
-                    public void accept(Integer storedSize) {
+                    public void accept(Long storedSize) {
                         cloudSizePref.setTitle(StringExt.getSize(storedSize) + " / " + StringExt.getSize(storageSize));
                     }
                 });

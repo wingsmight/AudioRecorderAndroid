@@ -8,6 +8,11 @@
         <item name="colorAccent">@color/darkGreen</item>
         <item name="android:background">@color/white</item>
 
+        <!-- color for stuff in action bar -->
+        <item name="toolbarStyle">@style/ToolbarStyle</item>
+        <item name="actionOverflowButtonStyle">@style/ToolbarStyle.Overflow</item>
+        <item name="drawerArrowStyle">@style/ToolbarStyle.DrawerIcon</item>
+
         <!-- Secondary brand color. -->
         <!--        <item name="colorSecondary">@color/teal_200</item>-->
         <!--        <item name="colorSecondaryVariant">@color/teal_700</item>-->
@@ -19,7 +24,21 @@
 
         <!-- Customize your theme here. -->
         <item name="android:buttonStyle">@style/Widget.AppCompat.Button.Colored</item>
+    </style>
 
+    <!-- Toolbar -->
+    <style name="ToolbarStyle" parent="@style/Widget.MaterialComponents.Toolbar">
+        <item name="titleTextColor">@color/darkGray</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="ToolbarStyle.Overflow" parent="@style/Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:tint">@color/darkGray</item>
+        <item name="android:foregroundTint">@color/darkGray</item>
+    </style>
+
+    <style name="ToolbarStyle.DrawerIcon" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">@color/darkGray</item>
     </style>
 
     <style name="Theme.AudioRecorder.NoActionBar">

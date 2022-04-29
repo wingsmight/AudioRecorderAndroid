@@ -14,9 +14,9 @@ public class User {
     String Email;
     Date BirthDate;
     long createdAt;
-    int storageSize;
+    long storageSize;
 
-    public User(String Name, String Surname, String email, Date BirthDate, long createdAt, int storageSize) {
+    public User(String Name, String Surname, String email, Date BirthDate, long createdAt, long storageSize) {
         this.Name=Name;
         this.Surname=Surname;
         this.Email=email;
@@ -52,7 +52,7 @@ public class User {
         return "";
     }
 
-    public int getCloudStorageSize() {
+    public long getCloudStorageSize() {
         return storageSize;
     }
 }

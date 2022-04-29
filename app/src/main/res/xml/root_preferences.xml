@@ -80,6 +80,7 @@
             app:selectable="false"
             app:iconSpaceReserved="false"
             app:singleLineTitle="true"
+            app:layout="@layout/cloud_plan_button"
             />
 
     </PreferenceCategory>
@@ -112,9 +113,7 @@
         <Preference
             app:key="donat"
             app:title="Поблагодарить разработчика"
-            app:selectable="false"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="true"
+            app:layout="@layout/tip_developer_button"
             />
 
     </PreferenceCategory>
@@ -124,9 +123,7 @@
         <Preference
             app:key="blank"
             app:title=" "
-            app:selectable="false"
-            app:iconSpaceReserved="false"
-            app:singleLineTitle="true"
+            app:layout="@layout/app_info_button"
             />
 
     </PreferenceCategory>

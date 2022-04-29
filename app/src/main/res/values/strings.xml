@@ -69,5 +69,6 @@
 
 Берегите себя!</string>
     <string name="title_activity_app_info">Информация</string>
+    <string name="title_activity_cloud_plan">Размер облака</string>
 
 </resources>

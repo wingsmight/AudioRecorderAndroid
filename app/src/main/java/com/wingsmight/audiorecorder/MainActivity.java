@@ -8,17 +8,31 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.billingclient.api.BillingClient;
+import com.android.billingclient.api.BillingClientStateListener;
+import com.android.billingclient.api.BillingFlowParams;
+import com.android.billingclient.api.BillingResult;
+import com.android.billingclient.api.Purchase;
+import com.android.billingclient.api.PurchasesUpdatedListener;
+import com.android.billingclient.api.SkuDetails;
+import com.android.billingclient.api.SkuDetailsParams;
+import com.android.billingclient.api.SkuDetailsResponseListener;
+import com.anjlab.android.iab.v3.BillingProcessor;
+import com.anjlab.android.iab.v3.PurchaseInfo;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.util.Consumer;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -29,14 +43,20 @@ import com.wingsmight.audiorecorder.ui.login.SignUpActivity;
 import com.wingsmight.audiorecorder.ui.main.MainFragment;
 import com.wingsmight.audiorecorder.ui.records.RecordsFragment;
 import com.wingsmight.audiorecorder.ui.settings.AppInfoActivity;
+import com.wingsmight.audiorecorder.ui.settings.CloudPlan.CloudPlanActivity;
 import com.wingsmight.audiorecorder.ui.settings.DoNotDisturbIntervalActivity;
 import com.wingsmight.audiorecorder.ui.settings.SettingsFragment;
 
 import org.vosk.LibVosk;
 import org.vosk.LogLevel;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
+import java.security.ProtectionDomain;
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener, BillingProcessor.IBillingHandler {
     private static final int PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
+    private static final String TIP_DEVELOPER_PRODUCT_ID = "tip_developer";
 
 
     BottomNavigationView bottomNavigationView;
@@ -45,11 +65,16 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
     final Fragment recordsFragment = new RecordsFragment();
     final FragmentManager fragmentManager = getSupportFragmentManager();
     Fragment active = mainFragment;
+    private BillingProcessor billingProcessor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        billingProcessor = new BillingProcessor(this, TIP_DEVELOPER_PRODUCT_ID, this);
+        billingProcessor.initialize();
+
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.nav);
         fragmentManager.beginTransaction().add(R.id.frame, recordsFragment, "recordsFragment").hide(recordsFragment).commit();
         fragmentManager.beginTransaction().add(R.id.frame, settingsFragment, "settingsFragment").hide(settingsFragment).commit();
@@ -138,6 +163,13 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
         Intent myIntent = new Intent(MainActivity.this, AppInfoActivity.class);
         MainActivity.this.startActivity(myIntent);
     }
+    public void tipDeveloper(View view) {
+        billingProcessor.purchase(MainActivity.this, TIP_DEVELOPER_PRODUCT_ID);
+    }
+    public void chooseCloudPlan(View view) {
+        Intent myIntent = new Intent(MainActivity.this, CloudPlanActivity.class);
+        MainActivity.this.startActivity(myIntent);
+    }
 
 
     private void setNightMode() {
@@ -155,5 +187,46 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO_BATTERY);
             }
         }
+    }
+
+    // IBillingHandler implementation
+    @Override
+    public void onBillingInitialized() {
+        /*
+         * Called when BillingProcessor was initialized and it's ready to purchase
+         */
+    }
+
+    @Override
+    public void onProductPurchased(String productId, PurchaseInfo purchaseInfo) {
+        /*
+         * Called when requested PRODUCT ID was successfully purchased
+         */
+    }
+
+    @Override
+    public void onBillingError(int errorCode, Throwable error) {
+        /*
+         * Called when some error occurred. See Constants class for more details
+         *
+         * Note - this includes handling the case where the user canceled the buy dialog:
+         * errorCode = Constants.BILLING_RESPONSE_RESULT_USER_CANCELED
+         */
+    }
+
+    @Override
+    public void onPurchaseHistoryRestored() {
+        /*
+         * Called when purchase history was restored and the list of all owned PRODUCT ID's
+         * was loaded from Google Play
+         */
+    }
+
+    @Override
+    public void onDestroy() {
+        if (billingProcessor != null) {
+            billingProcessor.release();
+        }
+        super.onDestroy();
     }
 }
